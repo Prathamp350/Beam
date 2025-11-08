@@ -9,18 +9,8 @@ const LoginPage = () => {
     password: "",
   });
 
-  // This is how we did it at first, without using our custom hook
-  // const queryClient = useQueryClient();
-  // const {
-  //   mutate: loginMutation,
-  //   isPending,
-  //   error,
-  // } = useMutation({
-  //   mutationFn: login,
-  //   onSuccess: () => queryClient.invalidateQueries({ queryKey: ["authUser"] }),
-  // });
+  const [showPassword, setShowPassword] = useState(false); // 👁️ Added for toggle
 
-  // This is how we did it using our custom hook - optimized version
   const { isPending, error, loginMutation } = useLogin();
 
   const handleLogin = (e) => {
@@ -40,7 +30,7 @@ const LoginPage = () => {
           <div className="mb-4 flex items-center justify-start gap-2">
             <ShipWheelIcon className="size-9 text-primary" />
             <span className="text-3xl font-bold font-mono bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary  tracking-wider">
-              Streamify
+              BEAM
             </span>
           </div>
 
@@ -62,6 +52,7 @@ const LoginPage = () => {
                 </div>
 
                 <div className="flex flex-col gap-3">
+                  {/* EMAIL */}
                   <div className="form-control w-full space-y-2">
                     <label className="label">
                       <span className="label-text">Email</span>
@@ -71,26 +62,61 @@ const LoginPage = () => {
                       placeholder="hello@example.com"
                       className="input input-bordered w-full"
                       value={loginData.email}
-                      onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
+                      onChange={(e) =>
+                        setLoginData({ ...loginData, email: e.target.value })
+                      }
                       required
+                      autoComplete="off"
+                      spellCheck="false"
+                      autoCorrect="off"
+                      autoCapitalize="none"
                     />
                   </div>
 
+                  {/* PASSWORD with Eye Toggle 👁️ */}
                   <div className="form-control w-full space-y-2">
                     <label className="label">
                       <span className="label-text">Password</span>
                     </label>
-                    <input
-                      type="password"
-                      placeholder="••••••••"
-                      className="input input-bordered w-full"
-                      value={loginData.password}
-                      onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-                      required
-                    />
+
+                    <div className="relative">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="••••••••"
+                        className="input input-bordered w-full pr-10"
+                        value={loginData.password}
+                        onChange={(e) =>
+                          setLoginData({ ...loginData, password: e.target.value })
+                        }
+                        required
+                        autoComplete="new-password"
+                        spellCheck="false"
+                        autoCorrect="off"
+                        autoCapitalize="none"
+                      />
+
+                      {/* Eye Icon Button */}
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-3 text-gray-500 hover:text-primary"
+                        aria-label={showPassword ? "Hide password" : "Show password"}
+                      >
+                        {showPassword ? (
+                          <i className="ri-eye-off-line text-lg"></i>
+                        ) : (
+                          <i className="ri-eye-line text-lg"></i>
+                        )}
+                      </button>
+                    </div>
                   </div>
 
-                  <button type="submit" className="btn btn-primary w-full" disabled={isPending}>
+                  {/* SUBMIT BUTTON */}
+                  <button
+                    type="submit"
+                    className="btn btn-primary w-full"
+                    disabled={isPending}
+                  >
                     {isPending ? (
                       <>
                         <span className="loading loading-spinner loading-xs"></span>
@@ -101,6 +127,7 @@ const LoginPage = () => {
                     )}
                   </button>
 
+                  {/* SIGNUP LINK */}
                   <div className="text-center mt-4">
                     <p className="text-sm">
                       Don't have an account?{" "}
@@ -124,7 +151,9 @@ const LoginPage = () => {
             </div>
 
             <div className="text-center space-y-3 mt-6">
-              <h2 className="text-xl font-semibold">Connect with language partners worldwide</h2>
+              <h2 className="text-xl font-semibold">
+                Connect with language partners worldwide
+              </h2>
               <p className="opacity-70">
                 Practice conversations, make friends, and improve your language skills together
               </p>
@@ -135,4 +164,5 @@ const LoginPage = () => {
     </div>
   );
 };
+
 export default LoginPage;

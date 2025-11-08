@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* -----------------------------
+   Stream/chat specific styling
+   ----------------------------- */
 .str-chat__channel {
   display: flex;
   align-items: center;
@@ -32,3 +35,103 @@
 .str-chat__message-input {
   border-top: 1px solid #ddd;
 }
+
+/* =======================================================
+   Hide browser built-in password reveal / clear icons
+   Keeps your custom eye toggle visible and functional
+   ======================================================= */
+
+/* Edge / IE */
+input::-ms-reveal,
+input::-ms-clear {
+  display: none !important;
+}
+
+/* Chrome/Chromium browsers */
+input[type="password"]::-webkit-textfield-decoration-container,
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-textfield-decoration-wrapper {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Firefox fallback */
+input[type="password"]::-moz-focus-inner {
+  border: 0;
+}
+
+/* General fallback */
+input[type="password"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Helper class for inputs with a custom eye button */
+.input-with-custom-eye {
+  position: relative;
+}
+
+/* Make sure input has enough right padding so the custom eye doesn't overlap text:
+   e.g. <input className="input input-bordered pr-10 input-with-custom-eye" /> */
+.input-with-custom-eye > .custom-eye-btn {
+  position: absolute;
+  right: 0.6rem; /* tweak as needed */
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+/* -----------------------------
+   Beam custom animations
+   ----------------------------- */
+@layer utilities {
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.7s ease-out forwards;
+  }
+
+  .animate-slideUp {
+    animation: slideUp 0.8s ease-out forwards;
+  }
+
+  .delay-150 {
+    animation-delay: 0.15s;
+  }
+
+  .delay-200 {
+    animation-delay: 0.2s;
+  }
+}
+
+/* Drawer slide-in */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slideIn {
+  animation: slideIn 0.4s ease-out forwards;
+}
+

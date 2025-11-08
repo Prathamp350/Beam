@@ -7,7 +7,7 @@ import NotificationsPage from "./pages/NotificationsPage.jsx";
 import CallPage from "./pages/CallPage.jsx";
 import ChatPage from "./pages/ChatPage.jsx";
 import OnboardingPage from "./pages/OnboardingPage.jsx";
-
+import AboutPage from "./pages/AboutPage.jsx";
 import { Toaster } from "react-hot-toast";
 
 import PageLoader from "./components/PageLoader.jsx";
@@ -101,6 +101,16 @@ const App = () => {
             )
           }
         />
+        <Route
+          path="/about"
+          element={
+           // show AboutPage inside Layout (no sidebar)
+          <Layout showSidebar={false}>
+            <AboutPage />
+          </Layout>
+           }
+        />
+
       </Routes>
 
       <Toaster />
