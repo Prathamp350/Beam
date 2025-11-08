@@ -97,9 +97,6 @@ const Navbar = ({ onToggleSidebar = () => {} }) => {
           </button>
           </Link>
 
-          <button className="btn btn-ghost btn-circle" aria-label="Settings">
-            <Settings className="h-5 w-5 text-base-content opacity-80" />
-          </button>
 
           {/* Notifications */}
           <Link to={"/notifications"}>
